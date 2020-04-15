@@ -1,12 +1,17 @@
 Rails.application.routes.draw do
-  resources :users, only: [:create,:index]
-  resources :posts, only: [:index]
+  resources :users, only: [:create,:index,:show]
+  resources :posts, only: [:index,:create,:show]
+  resources :user_posts, only: [:index,:show]
 
+ 
   post "/login", to: "users#login"
+  # post 'authenticate', to: 'authorization#authenticate'
   # post '/login', to: 'authorization#create'
   get "/profile", to: "users#profile"
   # verb "url", to: "controllerName#instanceMethodName"
   get "/persist", to: 'users#persist'
+  get "/news", to: "posts#news"
+  
 
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

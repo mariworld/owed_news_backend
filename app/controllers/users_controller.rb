@@ -1,10 +1,27 @@
 class UsersController < ApplicationController
     before_action :authorized, only: [:persist]
+  
     
     def index
       @users = User.all
-      render json: @users
+      render json: @users 
+
     end
+
+    def show
+      @user = User.find_by(id: params[:id])
+      render json: @user
+    end
+
+    # def posts
+    #   #this will be the custom route for the user posts
+    
+    #   @user = User.find_by(id: params[:id])
+    #   @post = Post.find_or_create_by(@post.id)
+    #   UserPost.create(user: @user.id, post: @post.id)
+    #   render json: @user
+    # end
+
 
     def create
       @user = User.create(user_params)
@@ -16,6 +33,19 @@ class UsersController < ApplicationController
         else
           render json: {error: @user.errors.full_messages}
         end
+      end
+
+      def create_user_post
+        @user = User.find_by(id: params[:id])
+        @post = Post.find_by(id: params[:id])
+       #now that we've found the user, post to user posts
+        UserPost.create(user: @user.id, post: params[:id] )
+        render json: @user
+      end
+
+      def my_posts
+        @user = User.find_by(id: params[:id])
+        
       end
 
     
@@ -32,6 +62,7 @@ class UsersController < ApplicationController
           infoToSaveInBox = {user_id: @user.id}
           auth_token = encode_token(infoToSaveInBox)
           render json: {user: UserSerializer.new(@user), token: auth_token}
+          # byebug
         else
           render json: {error: "INCORRECT USERNAME OR PASSWORD"}
         end
