@@ -1,6 +1,6 @@
 class UserPostSerializer < ActiveModel::Serializer
   # include FastJsonapi::ObjectSerializer  
-    attributes :post_information, :title, :url, :url_image, :description, :content_body
+    attributes :id, :post_information, :title, :url, :url_image, :description, :content_body
     belongs_to :post
     belongs_to :user
 

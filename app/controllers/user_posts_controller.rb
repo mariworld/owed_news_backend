@@ -6,14 +6,21 @@ class UserPostsController < ApplicationController
   end 
 
     def show
-        @user_post = UserPost.find(params[:id])
-        render json: @user_post
+        user_post = UserPost.find(params[:id])
+        render json: user_post
     end
 
     def create
         user_post = UserPost.create(user_post_params)
         redirect_to user_post.post
-      end
+    end
+
+    def destroy
+      # byebug
+      @user_post = UserPost.find(params[:id].to_i)
+      @user_post.destroy
+      render json: user_posts
+    end
     
       private
       def user_post_params

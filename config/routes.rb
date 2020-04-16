@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :users, only: [:create,:index,:show]
   resources :posts, only: [:index,:create,:show]
-  resources :user_posts, only: [:index,:show]
+  resources :user_posts, only: [:index,:show,:destroy]
 
  
   post "/login", to: "users#login"
